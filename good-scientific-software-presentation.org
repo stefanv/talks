@@ -1,0 +1,79 @@
+ # -*- org-reveal-title-slide: "<h1>%t</h1><h2>%a<br/><span>%e</span>&nbsp;<a href='https://twitter.com/stefanvdwalt'>@stefanvdwalt</a></h2><h3>%d</h3>"
+
+#+TITLE: How to Write Good Scientific Software
+#+AUTHOR: Stéfan van der Walt @@html: <br/>@@ Berkeley Institute for Data Science
+#+DATE: 01/2019, MLSS
+#+EMAIL: stefanv@berkeley.edu
+
+#+OPTIONS: reveal_width:1200 reveal_height:800 reveal_progress:nil
+#+OPTIONS: reveal_slide_number:nil num:nil reveal_history:t
+#+OPTIONS: reveal_title_slide:"<h1>%t</h1><h2>%a</h2><h3><span>%e</span>&nbsp;/&nbsp;@stefanvdwalt</h3><h4>%d</h4>"
+#+REVEAL_TRANS: none
+# default|cube|page|concave|zoom|linear|fade|none
+#+REVEAL_THEME: simple
+# beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_PLUGINS: (notes highlight)
+#+REVEAL_EXTRA_CSS: ./local.css
+#+OPTIONS: toc:nil
+
+** What is Scientific Software?
+
+Uncover /truths/.  Be *accurate*.
+
+For reproducibility, be *reusable*.
+
+** Purpose
+
+Scratch code
+
+↓
+
+Experimental code — private use
+
+↓
+
+Experimental code — public release
+
+↓
+
+Algorithmic / infrastructure code
+
+** Social Software
+
+Teams that work, work.
+
+When do teams work?
+
+Other ways teams improve work:
+
+- Review improves quality,
+- multiple use cases widen application, and
+- intellectural diversity provides creative solutions.
+
+** Technical Mechanisms for Higher Quality Software
+
+1. Test your software. ([[https://github.com/scikit-image/scikit-image/pull/3584][PR]], [[https://travis-ci.org/scikit-image/scikit-image/builds/465090731][test results]])
+2. Track your progress.
+3. Document your code. ([[https://github.com/numpy/numpy/blob/master/numpy/linalg/linalg.py#L328][NumPy docstring]])
+4. Keep it simple.
+5. Algorithm over optimization.
+6. Automate everything — 改善. ([[https://github.com/elegant-scipy/elegant-scipy][Elegant SciPy]])
+7. Be consistent.
+
+** Scholarly publication
+
+Publish your code.
+
+Publish your code on [[https://github.com/bnaul/IrregularTimeSeriesAutoencoderPaper][GitHub or similar]].
+
+Remember to add a license.
+
+** The End
+
+Write in teams.
+
+Test and document.
+
+Make it reusable.
+
+Publish.

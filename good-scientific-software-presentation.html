@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>How to Write Good Scientific Software</title>
+<meta name="author" content="(Stéfan van der Walt  (export-snippet (:back-end html :value  <br/> :begin 21 :end 37 :post-blank 1 :parent #0)) Berkeley Institute for Data Science)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js-3.5.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js-3.5.0/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+<link rel="stylesheet" href="./reveal.js-3.5.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js-3.5.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1>How to Write Good Scientific Software</h1><h2>Stéfan van der Walt  <br/> Berkeley Institute for Data Science</h2><h3><span><a href="mailto:stefanv@berkeley.edu">stefanv@berkeley.edu</a></span>&nbsp;/&nbsp;@stefanvdwalt</h3><h4>01/2019, MLSS</h4>
+</section>
+
+<section>
+<section id="slide-org2ccbd4d">
+<h2 id="org2ccbd4d">What is Scientific Software?</h2>
+<p>
+Uncover <i>truths</i>.  Be <b>accurate</b>.
+</p>
+
+<p>
+For reproducibility, be <b>reusable</b>.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orge6136ba">
+<h2 id="orge6136ba">Purpose</h2>
+<p>
+Scratch code
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+Experimental code — private use
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+Experimental code — public release
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+Algorithmic / infrastructure code
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org8ad09ad">
+<h2 id="org8ad09ad">Social Software</h2>
+<p>
+Teams that work, work.
+</p>
+
+<p>
+When do teams work?
+</p>
+
+<p>
+Other ways teams improve work:
+</p>
+
+<ul>
+<li>Review improves quality,</li>
+<li>multiple use cases widen application, and</li>
+<li>intellectural diversity provides creative solutions.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb4f052a">
+<h2 id="orgb4f052a">Technical Mechanisms for Higher Quality Software</h2>
+<ol>
+<li>Test your software. (<a href="https://github.com/scikit-image/scikit-image/pull/3584">PR</a>, <a href="https://travis-ci.org/scikit-image/scikit-image/builds/465090731">test results</a>)</li>
+<li>Track your progress.</li>
+<li>Document your code. (<a href="https://github.com/numpy/numpy/blob/master/numpy/linalg/linalg.py#L328">NumPy docstring</a>)</li>
+<li>Keep it simple.</li>
+<li>Algorithm over optimization.</li>
+<li>Automate everything — 改善. (<a href="https://github.com/elegant-scipy/elegant-scipy">Elegant SciPy</a>)</li>
+<li>Be consistent.</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-org2f2d2f2">
+<h2 id="org2f2d2f2">Scholarly publication</h2>
+<p>
+Publish your code.
+</p>
+
+<p>
+Publish your code on <a href="https://github.com/bnaul/IrregularTimeSeriesAutoencoderPaper">GitHub or similar</a>.
+</p>
+
+<p>
+Remember to add a license.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org6645833">
+<h2 id="org6645833">The End</h2>
+<p>
+Write in teams.
+</p>
+
+<p>
+Test and document.
+</p>
+
+<p>
+Make it reusable.
+</p>
+
+<p>
+Publish.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js-3.5.0/lib/js/head.min.js"></script>
+<script src="./reveal.js-3.5.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: false,
+history: true,
+center: true,
+slideNumber: false,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js-3.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+});
+</script>
+</body>
+</html>
