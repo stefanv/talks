@@ -45,7 +45,7 @@ discomfort, may not invalidate the work being done entirely.
 
 Second, I consider a subset of scientific software: that which is
 written to aid in reproducibility.  This software has to be
-**reusable**---particularly by those who did not write the software.
+**reusable**[^varoquaux-strive-for-reusability]---particularly by those who did not write the software.
 Even if reproducibility is not explicitly targeted, eventually most
 scientific codes become associated with research outputs, such as
 published papers.  At this point, ideally, the software should be open
@@ -53,6 +53,10 @@ for inspection, so that the science can be verified.  The vast
 majority of research code has *not* historically fallen into this
 category[^research-false], but I would argue that there are systematic changes underway
 that will place more and more emphasis on openness.
+
+[^varoquaux-strive-for-reusability]: Gaël Varoquaux, [Beyond
+    Computational Reproducibility, Let Us Aim for Reusability](http://gael-varoquaux.info/programming/beyond-computational-reproducibility-let-us-aim-for-reusability.html),
+    IEEE CIS TC Cognitive and Developmental Systems (volume 32, number 2, 2016).
 
 [^research-false]: [Why Most Published Research Findings Are False, https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124)
 
@@ -265,6 +269,10 @@ usage examples, and notes and references.
 
 Making code *shorter* does not necessarily mean making it *simpler* to
 understand.  Strive for clarity of expression, instead.
+
+I'll also note here that object orientation is a great distraction to
+new programmers, when functional design would suffice for the majority
+of cases.
 
 ### Algorithm over optimization
 
