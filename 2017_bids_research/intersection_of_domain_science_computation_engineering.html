@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>At the intersection of domain science, computation, and engineering</title>
+<meta name="author" content="(Stéfan van der Walt)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js-3.5.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js-3.5.0/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+<link rel="stylesheet" href="./reveal.js-3.5.0/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js-3.5.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1>At the intersection of domain science, computation, and engineering</h1><h2>Stéfan van der Walt&nbsp;(<a href="mailto:stefanv@berkeley.edu">stefanv@berkeley.edu</a>)</h2><h3>09/2017, BIDS</h3>
+</section>
+<aside class="notes">
+<p>
+
+</p>
+
+<p>
+YOU HAVE TO PRESENT THIS VIA A WEB SERVER
+</p>
+
+<p>
+Perhaps a bit ambitious in covering three topics:
+</p>
+
+<ol>
+<li>History of DS</li>
+<li>My work</li>
+<li>A different model for doing science</li>
+
+</ol>
+
+</aside>
+
+<section>
+<section id="slide-org35eb51d" data-background="black">
+<h2 id="org35eb51d">A Short History of Data Science</h2>
+<aside class="notes">
+<p>
+I think it's important to examine the history of data science to realize
+that while there may be little that is new per sé, the <b>focus</b> is
+entirely new, and that therein lies value.
+</p>
+
+</aside>
+
+
+<div class="figure">
+<p><img src="./lunar_transit.jpg" alt="lunar_transit.jpg" width="50%" style="display:block; margin:auto;" />
+</p>
+</div>
+
+</section>
+<section id="slide-tukey">
+<h3 id="tukey"><a id="orge8471c4"></a>Early Rumblings</h3>
+<p>
+Tukey, John W.<br />
+<a href="http://www.jstor.org/stable/2237638">The Future of Data Analysis</a><br />
+The Annals of Mathematical Statistics, vol. 33, no. 1, 1962, pp. 1–67.
+</p>
+
+
+<div class="figure">
+<p><img src="./tukey_profile.jpg" alt="tukey_profile.jpg" width="200px" style="float: left; margin-right: 1em;" />
+</p>
+</div>
+
+<blockquote style="display: inline-block; margin-top: -0.5em;">
+<p>
+All in all, I have come to feel that my central interest is in <b>data
+analysis</b>, which I take to include, among other things: procedures for
+<b>analyzing data</b>, techniques for <b>interpreting the results</b> of such
+procedures, ways of planning the <b>gathering of data</b> to make its
+analysis easier, more precise or more accurate, and all the <b>machinery</b>
+and results of (mathematical) statistics which apply to analyzing
+data.
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org7976e17">
+<h3 id="org7976e17">Tukey: The Future of Data Analysis</h3>
+<p>
+Work on new problems:
+</p>
+
+<blockquote nil>
+<p>
+<b>How is novelty most likely to begin and grow</b>? <b>Not through work on
+familiar problems</b>, in terms of familiar frameworks, and starting with
+the results of applying familiar processes to the observations. Some
+or all of these familiar constraints must be given up in each piece
+of work which may contribute novelty.  <b>We should seek out wholly new
+questions</b> to be answered. This is <b>likely to require a concern with
+more complexly organized data</b>, though there will be exceptions, as
+when we are insightful enough to ask new, useful kinds of questions
+about familiar sorts of data.
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org52da9a7" data-state="smaller">
+<h3 id="org52da9a7">Tukey: The Future of Data Analysis</h3>
+<blockquote nil>
+<p>
+[Data Analysis is] defined by a ubiquitous problem rather than by a
+concrete subject.
+</p>
+
+<p>
+Data analysis, and the parts of statistics which adhere to it, <b>must
+then take on the characteristics of a science</b> rather than those of
+mathematics, specifically:
+</p>
+
+<p>
+(bl) Data analysis must <b>seek for scope and usefulness</b> rather than
+security.<br />
+(b2) Data analysis must <b>be willing to err moderately often</b> in order
+that inadequate evidence shall more often suggest the right answer.<br />
+(b3) Data analysis must <b>use mathematical argument and mathematical
+results as bases for judgment</b> rather than as bases for proof or
+stamps of validity.
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org4d04737">
+<h3 id="org4d04737">Elsewhere: Benzécri, De Leeuw, &amp; others</h3>
+<blockquote nil>
+<p>
+In the 1960s <b>two currents of research</b> emerged in the spirit of Tukey’s
+exploratory data analysis: the French school and the Dutch
+school. Researchers in these schools were <b>outliers in the statistical
+landscape</b> of the time, in which most research was performed in the
+<b>framework of probability models</b>. [&#x2026;] <b>many of the modern arguments</b>
+about data sciences, machine learning, statistics, and inference (see
+for instance the ASA statement on p-values in Wasserstein and
+Lazar, 2016) were already debated.
+</p>
+
+<p>
+&#x2014; François Husson, Julie Josse, Gilbert Saporta<br />
+    <a href="http://dx.doi.org/10.18637/jss.v073.i06">Jan de Leeuw and the French School of Data Analysis</a><br />
+    Journal of Statistical Software, Vol 73 (2016), Issue 6.<br />
+    <a href="10.18637/jss.v073.i06">10.18637/jss.v073.i06</a>
+</p>
+</blockquote>
+
+</section>
+<section id="slide-org8e527d2">
+<h3 id="org8e527d2">Partial Timeline</h3>
+<!-- This HTML table template is generated by emacs 25.2.1 -->
+<table border="1">
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;1962&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Tukey,&nbsp;"The&nbsp;Future&nbsp;of&nbsp;Data&nbsp;Analysis"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;1973&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Benzécri,&nbsp;"Data&nbsp;Analysis&nbsp;(L’analyze&nbsp;des&nbsp;données)";&nbsp;"The&nbsp;models&nbsp;should&nbsp;&nbsp;<br />
+      &nbsp;follow&nbsp;the&nbsp;data."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;1974&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Peter&nbsp;Naur,&nbsp;"Concise&nbsp;Survey&nbsp;of&nbsp;Computer&nbsp;Methods";&nbsp;"Datalogy:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;the&nbsp;science&nbsp;of&nbsp;data&nbsp;and&nbsp;of&nbsp;data&nbsp;processes&nbsp;and&nbsp;its&nbsp;place&nbsp;in&nbsp;education"&nbsp;&nbsp;
+    </td>
+  </tr>
+</table>
+
+<aside class="notes">
+<p>
+Two blobs in the timeline.
+</p>
+
+<p>
+Lots of thing happened in the middle, but we were kind of busy setting
+up the internet and creating the <b>.com bubble</b>.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org0ee349d">
+<h3 id="org0ee349d">Partial Timeline (cont'd)</h3>
+<!-- This HTML table template is generated by emacs 25.2.1 -->
+<table border="1">
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;2001&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;William&nbsp;Cleveland,&nbsp;"Data&nbsp;Science:&nbsp;An&nbsp;Action&nbsp;Plan&nbsp;for&nbsp;Expanding&nbsp;the&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      Technical&nbsp;Areas&nbsp;of&nbsp;the&nbsp;Field&nbsp;of&nbsp;Statistics".&nbsp;A&nbsp;plan&nbsp;"to&nbsp;enlarge&nbsp;the&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      major&nbsp;areas&nbsp;of&nbsp;technical&nbsp;work&nbsp;of&nbsp;the&nbsp;field&nbsp;of&nbsp;statistics.&nbsp;[...]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      the&nbsp;altered&nbsp;field&nbsp;will&nbsp;be&nbsp;called&nbsp;‘data&nbsp;science.’"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      Proposes&nbsp;6&nbsp;technical&nbsp;focus&nbsp;areas&nbsp;for&nbsp;a&nbsp;university&nbsp;data&nbsp;science&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      department:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;Multidisciplinary&nbsp;Investigations&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;Models&nbsp;and&nbsp;Methods&nbsp;for&nbsp;Data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;Computing&nbsp;with&nbsp;Data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;Pedagogy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;5.&nbsp;Tool&nbsp;Evaluation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;6.&nbsp;Theory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;2001&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Leo&nbsp;Breiman,&nbsp;"Statistical&nbsp;Modeling:&nbsp;The&nbsp;Two&nbsp;Cultures"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;2004&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Ben&nbsp;Fry,&nbsp;dissertation:&nbsp;"Computation&nbsp;Information&nbsp;Design"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;1.&nbsp;Computer&nbsp;Science&nbsp;–&nbsp;acquire&nbsp;and&nbsp;parse&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;2.&nbsp;Mathematics,&nbsp;Statistics,&nbsp;&&nbsp;Data&nbsp;Mining&nbsp;–&nbsp;filter&nbsp;and&nbsp;mine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;3.&nbsp;Graphic&nbsp;Design&nbsp;–&nbsp;represent&nbsp;and&nbsp;refine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;4.&nbsp;Infovis&nbsp;and&nbsp;Human-Computer&nbsp;Interaction&nbsp;(HCI)&nbsp;–&nbsp;interaction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      &nbsp;2009&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      &nbsp;Hal&nbsp;Varian&nbsp;(Google&nbsp;Chief&nbsp;Economist):&nbsp;"The&nbsp;ability&nbsp;to&nbsp;take&nbsp;data—to&nbsp;be&nbsp;&nbsp;&nbsp;<br />
+      able&nbsp;to&nbsp;understand&nbsp;it,&nbsp;to&nbsp;process&nbsp;it,&nbsp;to&nbsp;extract&nbsp;value&nbsp;from&nbsp;it,&nbsp;to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      visualize&nbsp;it,&nbsp;to&nbsp;communicate&nbsp;it—that’s&nbsp;going&nbsp;to&nbsp;be&nbsp;a&nbsp;hugely&nbsp;important&nbsp;&nbsp;&nbsp;<br />
+      skill&nbsp;in&nbsp;the&nbsp;next&nbsp;decades…"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+  </tr>
+</table>
+
+<aside class="notes">
+<p>
+
+</p>
+
+<p>
+Highlight Hal Varian quote.
+</p>
+
+<p>
+For question time:
+</p>
+
+<p>
+Breiman:
+</p>
+<ol>
+<li>data modeling: assume data comes from a stochastic model;
+performance from goodness of fit</li>
+<li>algorithmic modeling: no assumed underlying model; performance from
+prediction</li>
+
+</ol>
+
+<p>
+Other unmentioned models?
+</p>
+
+<ul>
+<li>Bayesian methods</li>
+<li>sampling methods</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-exclusion-zero">
+<h3 id="exclusion-zero"><a id="org76b5702"></a>In Defining DS, Exclusion Brings Us to {}</h3>
+<p style="font-family: &quot;Computer Modern Sans&quot;, serif; font-style: italic; font-size: 80%;">
+data_science - stats - signal_processing - applied_maths - computer_science - &eta; = ∅ ?
+</p>
+
+
+<div class="figure">
+<p><img src="./venn_7.jpg" alt="venn_7.jpg" width="400px" style="display: block; margin: auto; box-shadow: none;" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+We can list a few things that are <b>not</b> new:
+</p>
+<ul>
+<li>(&lowast;) Handling <b>demanding computations</b> computation</li>
+<li>(&lowast;) Handling <b>complex data</b> challenges</li>
+<li>Finding and adjusting appropriate <b>models</b></li>
+<li><b>Visualization</b> of results</li>
+<li>Human <b>collaboration</b></li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-org430eecd">
+<h4 id="org430eecd">At the Edge of Data</h4>
+
+<div class="figure">
+<p><img src="./imitation_game_bombe.jpg" alt="imitation_game_bombe.jpg" width="55%" />
+</p>
+</div>
+
+<p>
+Bombe from <i>The Imitation Game</i>
+</p>
+
+<aside class="notes">
+<p>
+Alan Turing's &amp; others' efforts at Bletchley Park to crack Enigma
+</p>
+
+<p>
+Tremendous data and computational load under severe time restriction.
+</p>
+
+<p>
+So, this is not new.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgee359da">
+<h4 id="orgee359da">At the Edge of Processing Complexity</h4>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/hTRVlUT665U?start=3331&end=3486&aut%E2%80%8C%E2%80%8Boplay=1" frameborder="0" allowfullscreen></iframe>
+
+<p>
+<b>Los Alamos From Below</b><br />
+Richard Feynman, Santa Barbara, February 6, 1975
+</p>
+
+<aside class="notes">
+<p>
+Lots of parallel processes, interactive managing of those processes.
+</p>
+
+<p>
+So, this is not new.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-what_is_new" data-background="black">
+<h4 id="what_is_new"><a id="org996cee0"></a>What is New?</h4>
+
+<div class="figure">
+<p><img src="./pluto_inferno.png" alt="pluto_inferno.png" width="40%" style="display:block; margin:auto;" />
+</p>
+</div>
+
+<p class="centerBox">
+<i>scope</i>
+</p>
+
+<aside class="notes">
+<p>
+The <i>scope</i> of the problems we can address.
+</p>
+
+<p>
+After all, we have better computation infrastructure, data
+connectivity, storage, open source libraries, etc.
+</p>
+
+<p>
+Consider the evolution of deep nets.  Many of the same ideas floated
+previously were infeasible for computation.  Arrival of GPUs changed everything.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgde131d3">
+<h3 id="orgde131d3">Beyond Exclusion: Primary Intent</h3>
+
+<div class="figure">
+<p><img src="./data_scientist_whiteboard.jpg" alt="data_scientist_whiteboard.jpg" />
+</p>
+</div>
+
+<p>
+What is the <b>story you want to tell</b>?
+</p>
+
+<aside class="notes">
+<p>
+Contrast the <b>prime</b> interest (very roughly generalized) of the:
+</p>
+
+<ul>
+<li>Engineer: find a problem solution</li>
+<li>Biologist: explain an underlying phenomenon</li>
+<li>Statistician: find and analyze properties of the best applicable models</li>
+<li><b>Data Scientist</b>: build a reasonable data pipeline (and make likely inferences/predictions)</li>
+
+</ul>
+
+<p>
+Of course, you can be both, if you have the time!
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org989ba17">
+<h2 id="org989ba17">What I Work On</h2>
+<div class="outline-text-2" id="text-org989ba17">
+</div></section>
+<section id="slide-elegant-scipy" data-state="no-header">
+<h3 id="elegant-scipy"><a id="org02a6454"></a>Elegant SciPy</h3>
+
+<div class="figure">
+<p><img src="./elegant-scipy.png" alt="elegant-scipy.png" width="500px" style="display:block; margin:auto; border: none;" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+A good piece of code just <b>feels right</b>. When you look at it, its <b>intent
+is clear</b>, it is often <b>concise (but not so concise as to be obscure)</b>,
+and it is <b>efficient</b> at executing the task at hand. For the authors,
+the <b>joy of analyzing elegant code</b> lies in the <b>lessons hidden within</b>,
+and the way it <b>inspires us to be creative</b> in how we approach new
+coding problems.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org64bcb10" data-state="no-header">
+<h3 id="org64bcb10">Elegant SciPy</h3>
+<div class="leftColumnNarrow">
+
+<div class="figure">
+<p><img src="./elegant-scipy.png" alt="elegant-scipy.png" width="400px" style="border: none;" />
+</p>
+</div>
+</div>
+
+<p>
+Also available online at
+</p>
+
+<p>
+<a href="https://github.com/elegant-scipy/elegant-scipy">github.com/elegant-scipy/elegant-scipy</a>
+</p>
+
+<aside class="notes">
+<ul>
+<li>Under Creative Commons (CC-BY-NC-ND 4.0) with a teaching exception</li>
+<li>All code is BSD licensed.</li>
+
+</ul>
+
+</aside>
+
+<p>
+Notebooks at<br />
+<a href="https://github.com/elegant-scipy/notebooks">github.com/elegant-scipy/notebooks</a>
+</p>
+
+</section>
+<section id="slide-org3a2c959">
+<h3 id="org3a2c959">Elegant SciPy</h3>
+<p>
+Chapter 7: optimization &amp; registration notebook
+</p>
+
+</section>
+<section id="slide-org10e6c6b">
+<h3 id="org10e6c6b">Cesium-ML</h3>
+
+<div class="figure">
+<p><img src="./cesium_data_types.png" alt="cesium_data_types.png" />
+</p>
+</div>
+
+<aside class="notes">
+<ul>
+<li>Machine learning applied to both regularly &amp; irregularly sampled
+time-series</li>
+<li>Python library for use with scikit-learn</li>
+<li>Web platform for fitting models and making predictions</li>
+<li>Scaling to large datasets</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgc31f80d">
+<h3 id="orgc31f80d">Cesium-ML</h3>
+
+<div class="figure">
+<p><img src="./cesium_20160714_screenshot.png" alt="cesium_20160714_screenshot.png" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Michaelangelo anyone? :)
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org69eb2b7">
+<h3 id="org69eb2b7">Cesium-ML</h3>
+
+<div class="figure">
+<p><img src="./autoencoder_network.png" alt="autoencoder_network.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-genesis">
+<h3 id="genesis"><a id="org7f43355"></a>Genesis</h3>
+
+<div class="figure">
+<p><img src="./genesis.jpg" alt="genesis.jpg" width="40%" style="float: left; margin-right: 1em;" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="./genesis_flight.jpg" alt="genesis_flight.jpg" width="50%" style="float: left;" />
+</p>
+</div>
+
+</section>
+<section id="slide-org320420f">
+<h3 id="org320420f">Genesis</h3>
+
+<div class="figure">
+<p><img src="./genesis_after.jpg" alt="genesis_after.jpg" />
+</p>
+</div>
+
+</section>
+<section id="slide-org15b66c7">
+<h3 id="org15b66c7">Genesis</h3>
+<p>
+<img src="./genesis_scan.png" alt="genesis_scan.png" /> <img src="./genesis_mask.png" alt="genesis_mask.png" />
+</p>
+
+</section>
+<section id="slide-org2e67081">
+<h3 id="org2e67081">SkyPortal</h3>
+<p>
+<b>Demo</b>
+</p>
+
+<p>
+Note: BaseLayer
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-fcs-layout">
+<h2 id="fcs-layout"><a id="org3d20273"></a>Focused Collaborative Scientific Iteration</h2>
+<p>
+<i>I know, catchy ;)</i>
+</p>
+
+
+<div class="figure">
+<p><img src="./fcsi.png" alt="fcsi.png" style="box-shadow: none;" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+I'd like to sketch out an approach for Data Science projects that I
+would like to try.
+</p>
+
+<p>
+Team: 6 or smaller
+</p>
+
+<p>
+Consists at least of:
+</p>
+<ul>
+<li>Domain expert</li>
+<li>Software expert</li>
+<li>Computational expert</li>
+
+</ul>
+
+<p>
+Clearly defined goal
+</p>
+
+<p>
+Time-limit: 2 or 3 months
+</p>
+
+<p>
+Daily commitment:
+</p>
+<ul>
+<li>4 hours</li>
+<li>in-depth discussion of any roadblocks</li>
+<li>team members educate one another w.r.t. domain and computation</li>
+<li>directly address solutions with variously skilled hands on deck</li>
+<li>based on the agile software approach</li>
+
+</ul>
+
+<p>
+Contrast this against massive grants, with impossible uncertainty in
+the face of long timelines, that requires big organizational efforts,
+and suffers from delays in communication and availability.
+</p>
+
+<p>
+Funding: low risk, small amounts, well defined project
+</p>
+
+<p>
+Challenges: incentives model (papers will be had, good science will be
+done, but what else?)
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-end_slide" data-state="end-slide">
+<h2 id="end_slide"><a id="org9455003"></a>The End</h2>
+<div class="centerBox">
+<p>
+<img src="./email_mark.png" alt="email_mark.png" /> &nbsp;&nbsp;<a href="mailto:stefanv@berkeley.edu">stefanv@berkeley.edu</a><br />
+<img src="./web_mark.png" alt="web_mark.png" />&nbsp;&nbsp; <a href="http://mentat.za.net">http://mentat.za.net</a><br />
+<img src="./twitter_mark.png" alt="twitter_mark.png" /> &nbsp;&nbsp;<a href="https://twitter.com/stefanvdwalt">stefanvdwalt</a><br />
+<img src="./github_mark.png" alt="github_mark.png" /> &nbsp;&nbsp;<a href="https://github.com/stefanv">stefanv</a>
+</p>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js-3.5.0/lib/js/head.min.js"></script>
+<script src="./reveal.js-3.5.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: false,
+history: true,
+center: true,
+slideNumber: false,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js-3.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js-3.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+});
+</script>
+</body>
+</html>

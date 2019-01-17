@@ -1,0 +1,938 @@
+#+TITLE: At the intersection of domain science, computation, and engineering
+#+AUTHOR: Stéfan van der Walt
+#+DATE: 09/2017, BIDS
+#+EMAIL: stefanv@berkeley.edu
+
+#+OPTIONS: reveal_width:1200 reveal_height:800 reveal_progress:nil
+#+OPTIONS: reveal_slide_number:nil num:nil reveal_history:t
+#+OPTIONS: reveal_title_slide:"<h1>%t</h1><h2>%a&nbsp;(%e)</h2><h3>%d</h3>"
+#+REVEAL_TRANS: none
+# default|cube|page|concave|zoom|linear|fade|none
+#+REVEAL_THEME: simple
+# beige|black|blood|league|moon|night|serif|simple|sky|solarized|white
+#+REVEAL_PLUGINS: (notes highlight)
+#+REVEAL_EXTRA_CSS: ./local.css
+#+OPTIONS: toc:nil
+
+#+BEGIN_NOTES
+
+YOU HAVE TO PRESENT THIS VIA A WEB SERVER
+
+Perhaps a bit ambitious in covering three topics:
+
+1. History of DS
+2. My work
+3. A different model for doing science
+#+END_NOTES
+
+* A Short History of Data Science
+  :PROPERTIES:
+  :reveal_background: black
+  :END:
+
+#+BEGIN_NOTES
+I think it's important to examine the history of data science to realize
+that while there may be little that is new per sé, the *focus* is
+entirely new, and that therein lies value.
+#+END_NOTES
+
+#+ATTR_HTML: :width 50% :style display:block; margin:auto;
+[[./lunar_transit.jpg]]
+
+** Early Rumblings
+   :PROPERTIES:
+   :CUSTOM_ID: tukey
+   :END:
+
+Tukey, John W.\\
+[[http://www.jstor.org/stable/2237638][The Future of Data Analysis]]\\
+The Annals of Mathematical Statistics, vol. 33, no. 1, 1962, pp. 1–67.
+
+#+ATTR_HTML: :width 200px :style float: left; margin-right: 1em;
+[[./tukey_profile.jpg]]
+
+#+REVEAL_HTML: <blockquote style="display: inline-block; margin-top: -0.5em;">
+All in all, I have come to feel that my central interest is in *data
+analysis*, which I take to include, among other things: procedures for
+*analyzing data*, techniques for *interpreting the results* of such
+procedures, ways of planning the *gathering of data* to make its
+analysis easier, more precise or more accurate, and all the *machinery*
+and results of (mathematical) statistics which apply to analyzing
+data.
+#+REVEAL_HTML: </blockquote>
+
+** Tukey: The Future of Data Analysis
+
+Work on new problems:
+
+#+BEGIN_QUOTE
+ *How is novelty most likely to begin and grow*? *Not through work on
+ familiar problems*, in terms of familiar frameworks, and starting with
+ the results of applying familiar processes to the observations. Some
+ or all of these familiar constraints must be given up in each piece
+ of work which may contribute novelty.  *We should seek out wholly new
+ questions* to be answered. This is *likely to require a concern with
+ more complexly organized data*, though there will be exceptions, as
+ when we are insightful enough to ask new, useful kinds of questions
+ about familiar sorts of data.
+
+#+END_QUOTE
+
+** Tukey: The Future of Data Analysis
+   :PROPERTIES:
+   :reveal_data_state: smaller
+   :END:
+
+#+BEGIN_QUOTE
+ [Data Analysis is] defined by a ubiquitous problem rather than by a
+ concrete subject.
+
+ Data analysis, and the parts of statistics which adhere to it, *must
+ then take on the characteristics of a science* rather than those of
+ mathematics, specifically:
+
+ (bl) Data analysis must *seek for scope and usefulness* rather than
+ security.\\
+ (b2) Data analysis must *be willing to err moderately often* in order
+ that inadequate evidence shall more often suggest the right answer.\\
+ (b3) Data analysis must *use mathematical argument and mathematical
+ results as bases for judgment* rather than as bases for proof or
+ stamps of validity.
+#+END_QUOTE
+
+** COMMENT Echoes of Tukey in DS8
+
+Introduction to "[[https://www.inferentialthinking.com][Computational and Inferential Thinking]]" (DS8
+textbook) by Ani Adhikari and John DeNero:
+
+#+BEGIN_QUOTE
+Data are descriptions of the world around us, collected through
+observation and stored on computers. Computers enable us to infer
+properties of the world from these descriptions. Data science is the
+discipline of drawing conclusions from data using computation. There
+are three core aspects of effective data analysis: *exploration,
+prediction, and inference.*
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+...Real data often do not follow regular patterns or match standard equations.
+#+END_QUOTE
+
+** Elsewhere: Benzécri, De Leeuw, & others
+
+#+BEGIN_QUOTE
+In the 1960s *two currents of research* emerged in the spirit of Tukey’s
+exploratory data analysis: the French school and the Dutch
+school. Researchers in these schools were *outliers in the statistical
+landscape* of the time, in which most research was performed in the
+*framework of probability models*. [...] *many of the modern arguments*
+about data sciences, machine learning, statistics, and inference (see
+for instance the ASA statement on p-values in Wasserstein and
+Lazar, 2016) were already debated.
+
+--- François Husson, Julie Josse, Gilbert Saporta\\
+    [[http://dx.doi.org/10.18637/jss.v073.i06][Jan de Leeuw and the French School of Data Analysis]]\\
+    Journal of Statistical Software, Vol 73 (2016), Issue 6.\\
+    doi:10.18637/jss.v073.i06
+
+#+END_QUOTE
+
+** Partial Timeline
+
++-------+------------------------------------------------------------------------+
+| 1962  | Tukey, "The Future of Data Analysis"                                   |
++-------+------------------------------------------------------------------------+
+| 1973  | Benzécri, "Data Analysis (L’analyze des données)"; "The models should  |
+|       | follow the data."                                                      |
++-------+------------------------------------------------------------------------+
+| 1974  | Peter Naur, "Concise Survey of Computer Methods"; "Datalogy:           |
+|       | the science of data and of data processes and its place in education"  |
++-------+------------------------------------------------------------------------+
+
+#+BEGIN_NOTES
+Two blobs in the timeline.
+
+Lots of thing happened in the middle, but we were kind of busy setting
+up the internet and creating the *.com bubble*.
+#+END_NOTES
+
+** Partial Timeline (cont'd)
+
++-------+------------------------------------------------------------------------+
+| 2001  | William Cleveland, "Data Science: An Action Plan for Expanding the     |
+|       |Technical Areas of the Field of Statistics". A plan "to enlarge the     |
+|       |major areas of technical work of the field of statistics. [...]         |
+|       |the altered field will be called ‘data science.’"                       |
+|       |                                                                        |
+|       |Proposes 6 technical focus areas for a university data science          |
+|       |department:                                                             |
+|       |    1. Multidisciplinary Investigations                                 |
+|       |    2. Models and Methods for Data                                      |
+|       |    3. Computing with Data                                              |
+|       |    4. Pedagogy                                                         |
+|       |    5. Tool Evaluation                                                  |
+|       |    6. Theory                                                           |
++-------+------------------------------------------------------------------------+
+| 2001  | Leo Breiman, "Statistical Modeling: The Two Cultures"                  |
++-------+------------------------------------------------------------------------+
+| 2004  | Ben Fry, dissertation: "Computation Information Design"                |
+|       |  1. Computer Science – acquire and parse data                          |
+|       |  2. Mathematics, Statistics, & Data Mining – filter and mine           |
+|       |  3. Graphic Design – represent and refine                              |
+|       |  4. Infovis and Human-Computer Interaction (HCI) – interaction         |
++-------+------------------------------------------------------------------------+
+| 2009  | Hal Varian (Google Chief Economist): "The ability to take data—to be   |
+|       |able to understand it, to process it, to extract value from it, to      |
+|       |visualize it, to communicate it—that’s going to be a hugely important   |
+|       |skill in the next decades…"                                             |
++-------+------------------------------------------------------------------------+
+
+#+BEGIN_NOTES
+
+Highlight Hal Varian quote.
+
+For question time:
+
+Breiman:
+1. data modeling: assume data comes from a stochastic model;
+   performance from goodness of fit
+2. algorithmic modeling: no assumed underlying model; performance from
+   prediction
+
+Other unmentioned models?
+
+- Bayesian methods
+- sampling methods
+
+#+END_NOTES
+
+** In Defining DS, Exclusion Brings Us to {}
+   :PROPERTIES:
+   :CUSTOM_ID: exclusion-zero
+   :END:
+
+#+ATTR_HTML: :style font-family: "Computer Modern Sans", serif; font-style: italic; font-size: 80%;
+data_science - stats - signal_processing - applied_maths - computer_science - \eta = ∅ ?
+
+#+ATTR_HTML: :width 400px :style display: block; margin: auto; box-shadow: none;
+[[./venn_7.jpg]]
+
+#+BEGIN_NOTES
+We can list a few things that are *not* new:
+- (\ast{}) Handling *demanding computations* computation
+- (\ast{}) Handling *complex data* challenges
+- Finding and adjusting appropriate *models*
+- *Visualization* of results
+- Human *collaboration*
+#+END_NOTES
+
+*** COMMENT At the Edge of Computation
+
+#+REVEAL_HTML: <div class="leftColumn">
+#+ATTR_HTML: :width 400px
+[[./gauss_theoria_motus_corporum_celestium.jpg]]
+#+REVEAL_HTML: </div>
+
+\\
+*Gauss-Newton algorithm* for computing non-linear least squares
+
+#+BEGIN_NOTES
+C.F. Gauss, *Theory of the Motion of the Heavenly
+Bodies Moving About the Sun in Conic Sections*, 1809.
+
+*Gauss-Newton algorithm* for computing non-linear least squares
+
+AKA *Nonlinear regression* (stats), *Differential correction* (astronomy)
+#+END_NOTES
+
+*** COMMENT At the Edge of Computation (cont'd)
+    :PROPERTIES:
+    :REVEAL_BACKGROUND: black
+    :reveal_data_state: smaller
+    :CUSTOM_ID: endurance
+    :END:
+
+#+REVEAL_HTML: <div class="leftColumnNarrow">
+#+ATTR_HTML: :width 400px
+[[./endurance.jpg]]
+Shackleton's /Endurance/
+#+REVEAL_HTML: </div>
+
+For state estimation:
+
++------+-------------------------------------------------------------------------------+
+| 1959 | Swirling makes it recursive (Bayes-Swerling filter)                           |
++------+-------------------------------------------------------------------------------+
+| 1960 | Kalman & Bucy (Kalman filter) (related to Swirling under certain assumptions) |
++------+-------------------------------------------------------------------------------+
+
+Recursive formulation /enables computation/ but /introduces
+limitations/.
+
+Now, re-examined in *N. Morrison*, 2013, /Tracking Filter Engineering/.
+
+#+BEGIN_NOTES
+iterative, non-recursive ⟶ adaptive memory, non-linear robustness
+#+END_NOTES
+
+*** At the Edge of Data
+
+#+ATTR_HTML: :width 55%
+[[./imitation_game_bombe.jpg]]
+
+Bombe from /The Imitation Game/
+
+#+BEGIN_NOTES
+Alan Turing's & others' efforts at Bletchley Park to crack Enigma
+
+Tremendous data and computational load under severe time restriction.
+
+So, this is not new.
+#+END_NOTES
+
+*** At the Edge of Processing Complexity
+
+#+REVEAL_HTML: <iframe width="420" height="315" src="https://www.youtube.com/embed/hTRVlUT665U?start=3331&end=3486&aut%E2%80%8C%E2%80%8Boplay=1" frameborder="0" allowfullscreen></iframe>
+
+*Los Alamos From Below*\\
+Richard Feynman, Santa Barbara, February 6, 1975
+
+#+BEGIN_NOTES
+Lots of parallel processes, interactive managing of those processes.
+
+So, this is not new.
+#+END_NOTES
+
+*** What is New?
+  :PROPERTIES:
+  :reveal_background: black
+  :CUSTOM_ID: what_is_new
+  :END:
+
+#+ATTR_HTML: :width 40% :style display:block; margin:auto;
+[[./pluto_inferno.png]]
+
+#+ATTR_HTML: :class centerBox
+/scope/
+
+#+BEGIN_NOTES
+The /scope/ of the problems we can address.
+
+After all, we have better computation infrastructure, data
+connectivity, storage, open source libraries, etc.
+
+Consider the evolution of deep nets.  Many of the same ideas floated
+previously were infeasible for computation.  Arrival of GPUs changed everything.
+#+END_NOTES
+
+** Beyond Exclusion: Primary Intent
+
+[[./data_scientist_whiteboard.jpg]]
+
+What is the *story you want to tell*?
+
+#+BEGIN_NOTES
+Contrast the *prime* interest (very roughly generalized) of the:
+
+- Engineer: find a problem solution
+- Biologist: explain an underlying phenomenon
+- Statistician: find and analyze properties of the best applicable models
+- *Data Scientist*: build a reasonable data pipeline (and make likely inferences/predictions)
+
+Of course, you can be both, if you have the time!
+#+END_NOTES
+
+* What I Work On
+** Elegant SciPy
+   :PROPERTIES:
+   :CUSTOM_ID: elegant-scipy
+   :reveal_data_state: no-header
+   :END:
+#+ATTR_HTML: :width 500px :style display:block; margin:auto; border: none;
+[[./elegant-scipy.png]]
+
+#+BEGIN_NOTES
+A good piece of code just *feels right*. When you look at it, its *intent
+is clear*, it is often *concise (but not so concise as to be obscure)*,
+and it is *efficient* at executing the task at hand. For the authors,
+the *joy of analyzing elegant code* lies in the *lessons hidden within*,
+and the way it *inspires us to be creative* in how we approach new
+coding problems.
+#+END_NOTES
+
+** Elegant SciPy
+   :PROPERTIES:
+   :reveal_data_state: no-header
+   :END:
+
+#+REVEAL_HTML: <div class="leftColumnNarrow">
+#+ATTR_HTML: :width 400px :style border: none;
+[[./elegant-scipy.png]]
+#+REVEAL_HTML: </div>
+
+Also available online at
+
+[[https://github.com/elegant-scipy/elegant-scipy][github.com/elegant-scipy/elegant-scipy]]
+
+#+BEGIN_NOTES
+- Under Creative Commons (CC-BY-NC-ND 4.0) with a teaching exception
+- All code is BSD licensed.
+#+END_NOTES
+
+Notebooks at\\
+[[https://github.com/elegant-scipy/notebooks][github.com/elegant-scipy/notebooks]]
+
+** Elegant SciPy
+
+Chapter 7: optimization & registration notebook
+
+** Cesium-ML
+
+[[./cesium_data_types.png]]
+
+#+BEGIN_NOTES
+- Machine learning applied to both regularly & irregularly sampled
+  time-series
+- Python library for use with scikit-learn
+- Web platform for fitting models and making predictions
+- Scaling to large datasets
+#+END_NOTES
+
+** Cesium-ML
+
+[[./cesium_20160714_screenshot.png]]
+
+#+BEGIN_NOTES
+Michaelangelo anyone? :)
+#+END_NOTES
+
+** Cesium-ML
+
+[[./autoencoder_network.png]]
+
+** Genesis
+   :PROPERTIES:
+   :CUSTOM_ID: genesis
+   :END:
+
+#+ATTR_HTML: :width 40% :style float: left; margin-right: 1em;
+[[./genesis.jpg]]
+#+ATTR_HTML: :width 50% :style float: left;
+[[./genesis_flight.jpg]]
+
+** Genesis
+
+[[./genesis_after.jpg]]
+
+** Genesis
+
+[[./genesis_scan.png]] [[./genesis_mask.png]]
+
+** SkyPortal
+
+*Demo*
+
+Note: BaseLayer
+
+* Focused Collaborative Scientific Iteration
+  :PROPERTIES:
+  :CUSTOM_ID: fcs-layout
+  :END:
+
+/I know, catchy ;)/
+
+#+ATTR_HTML: :style box-shadow: none;
+[[./fcsi.png]]
+
+#+BEGIN_NOTES
+I'd like to sketch out an approach for Data Science projects that I
+would like to try.
+
+Team: 6 or smaller
+
+Consists at least of:
+- Domain expert
+- Software expert
+- Computational expert
+
+Clearly defined goal
+
+Time-limit: 2 or 3 months
+
+Daily commitment:
+- 4 hours
+- in-depth discussion of any roadblocks
+- team members educate one another w.r.t. domain and computation
+- directly address solutions with variously skilled hands on deck
+- based on the agile software approach
+
+Contrast this against massive grants, with impossible uncertainty in
+the face of long timelines, that requires big organizational efforts,
+and suffers from delays in communication and availability.
+
+Funding: low risk, small amounts, well defined project
+
+Challenges: incentives model (papers will be had, good science will be
+done, but what else?)
+#+END_NOTES
+
+* The End
+  :PROPERTIES:
+  :CUSTOM_ID: end_slide
+  :reveal_data_state: end-slide
+  :END:
+
+#+REVEAL_HTML:<div class="centerBox">
+[[./email_mark.png]] \nbsp\nbsp[[mailto:stefanv@berkeley.edu][stefanv@berkeley.edu]]\\
+[[./web_mark.png]]\nbsp\nbsp http://mentat.za.net\\
+[[./twitter_mark.png]] \nbsp\nbsp[[https://twitter.com/stefanvdwalt][stefanvdwalt]]\\
+[[./github_mark.png]] \nbsp\nbsp[[https://github.com/stefanv][stefanv]]
+#+REVEAL_HTML:</div>
+
+
+* COMMENT Notes to myself
+
+[7] N. Morrison, “Introduction to Sequential Smoothing and
+Prediction”, McGraw-Hill, 1969. 
+
+From Inggs paper:
+
+*Gauss-Newton Filtering incorporating Levenberg-Marquardt Methods for Radar Tracking*
+Roaldje Nadjiasngar, Michael Inggs
+https://arxiv.org/abs/1110.5207v1
+
+*Introduction to sequential smoothing and prediction*
+Norman Morrison
+McGraw-Hill Book Company, 1969
+
+The GNF is iterative and non-recursive, with memory that can be
+adaptively controlled. The GNF differs from the Gauss-Newton
+optimisation methods discussed in the literature as it provides a
+different method for computing the Hessian matrix. This flexibility
+makes the GNF filter highly suitable for tracking in strongly
+non-linear situations.
+
+The Gauss-Newton (GN) algorithm is the minimum-variance
+non-recursive estimation procedure invented by Gauss in
+1809 [3, 4, 7]. Mathematicians refer to it by that name;
+statisticians refer to it as nonlinear regression; astronomers
+call it differential correction. In 1959 Swerling reworked
+Gauss’ non-recursive algorithm into a recursive format [9],
+giving rise to the Bayes-Swerling filter. In 1960/61, Kalman
+and Bucy published their algorithm [5, 6], which, in the
+absence of process noise, can be derived from Swerling’s
+recursive format [7]. The huge advances in computing power
+and affordability of RAM since the early 60’s have made it
+desirable that we re-examine Gauss’ original algorithm which
+avoids the problems and/or limitations incurred by either the
+Swerling or the Kalman recursive formats, and at the same
+time opens up tremendous flexibility in terms of access to
+internal filter values.
+
+*The Iterated Kalman Filter Update as a Gauss-Newton Method*
+Bradley M. Bell and Frederick W. Cathey
+IEEE Transactions on Automatic Control, vol. 38, no. 2, pp. 294-297, Feb 1993
+DOI:10.1109/9.250476
+
+We show that the iterated Kalman filter (IKF) update is an
+application of the Gauss-Newton method for approximating a maximum
+likelihood estimate. We also present an example in which the iterated
+Kalman filter update and maximum likelihood estimate show correct
+convergence behavior as the observation becomes more accurate, whereas
+the extended Kalman filter update does not. 
+
+
+
+- [ ] Map of distances to various departments and "organizational
+  units" on campus
+- DS in academia and industry do not have to look the same; in fact,
+  perhaps desirable to have it look differently at uni
+
+From [[https://www.forbes.com/sites/gilpress/2013/05/28/a-very-short-history-of-data-science/#745ebd955cfc][Forbes article]]:
+
+1962 John W. Tukey, “The Future of Data Analysis”
+
+1973 "Data Analysis (L’analyze des données)" by JP Benzécri
+
+1. The statistics is not probability, under the name of
+   (mathematical) statistics was built a pompous discipline based on
+   theoretical assumptions that are rarely met in practice.
+2. The models should follow the data., not vice versa.
+3. You must simultaneously process the information relating to the
+   greater number of possible dimensions so as to provide a
+   sufficiently complete representation of the phenomena of interest.
+
+1974: *Peter Naur* publishes Concise Survey of Computer Methods in
+Sweden and the United States. The book is a survey of contemporary
+data processing methods that are used in a wide range of
+applications. It is organized around the concept of data as defined in
+the IFIP Guide to Concepts and Terms in Data Processing: “[Data is] a
+representation of facts or ideas in a formalized manner capable of
+being communicated or manipulated by some process.“ The Preface to the
+book tells the reader that a course plan was presented at the IFIP
+Congress in 1968, titled “ *Datalogy*, the science of data and of data
+processes and its place in education,“ and that in the text of the
+book, ”the term ‘data science’ has been used freely.” Naur offers the
+following definition of data science:
+
+> “The science of dealing with data, once they have been established,
+> while the relation of the data to what they represent is delegated
+> to other fields and sciences.”
+
+From
+
+François Husson, Julie Josse, Gilbert Saporta [[http://dx.doi.org/10.18637/jss.v073.i06][Jan de Leeuw and the
+French School of Data Analysis]] Journal of Statistical Software, Vol 73
+(2016), Issue 6.  doi:10.18637/jss.v073.i06
+
+In the 1960s two currents of research emerged in the spirit of Tukey’s
+exploratory data analysis (Tukey 1962): the French school and the
+Dutch school. Researchers in these schools were outliers in the
+statistical landscape of the time, in which most research was
+performed in the framework of probability models. What can be
+highlighted is that many of the modern arguments about data sciences,
+machine learning, statistics, and inference (see for instance the ASA
+statement on p-values in Wasserstein and Lazar 2016) were already
+debated. We feel that the way both schools tackled problems and data
+was a bit ahead of its time.
+
+2001 William S. Cleveland publishes "Data Science: An Action Plan for
+Expanding the Technical Areas of the Field of Statistics." It is a
+plan “to enlarge the major areas of technical work of the field of
+statistics. Because the plan is ambitious and implies substantial
+change, the altered field will be called ‘data science.’" Cleveland
+puts the proposed new discipline in the context of computer science
+and the contemporary work in data mining: “…the benefit to the data
+analyst has been limited, because the knowledge among computer
+scientists about how to think of and approach the analysis of data is
+limited, just as the knowledge of computing environments by
+statisticians is limited. A merger of knowledge bases would produce a
+powerful force for innovation. This suggests that statisticians should
+look to computing for knowledge today just as data science looked to
+mathematics in the past. … departments of data science should contain
+faculty members who devote their careers to advances in computing with
+data and who form partnership with computer scientists.”
+
+The paper proposes 6 technical focus areas for a university data
+science department.
+
+    1. Multidisciplinary Investigations
+    2. Models and Methods for Data
+    3. Computing with Data
+    4. Pedagogy
+    5. Tool Evaluation
+    6. Theory
+
+2001 Leo Breiman publishes “Statistical Modeling: The Two Cultures”
+(PDF): “There are two cultures in the use of statistical modeling to
+reach conclusions from data. One assumes that the data are generated
+by a given stochastic data model. The other uses algorithmic models
+and treats the data mechanism as unknown. The statistical community
+has been committed to the almost exclusive use of data models. This
+commitment has led to irrelevant theory, questionable conclusions, and
+has kept statisticians from working on a large range of interesting
+current problems. Algorithmic modeling, both in theory and practice,
+has developed rapidly in fields outside statistics. It can be used
+both on large complex data sets and as a more accurate and informative
+alternative to data modeling on smaller data sets. If our goal as a
+field is to use data to solve problems, then we need to move away from
+exclusive dependence on data models and adopt a more diverse set of
+tools.”
+
+2004 [[http://benfry.com/phd/][Ben Fry in dissertation]]: "Computational Information Design"
+
+1. Computer Science – acquire and parse data
+2. Mathematics, Statistics, & Data Mining – filter and mine
+3. Graphic Design – represent and refine
+4. Infovis and Human-Computer Interaction (HCI) – interaction
+
+via [[https://flowingdata.com/2009/06/04/rise-of-the-data-scientist/][Nathan Yau of FlowingData]]; who also writes:
+
+"And after two years of highlighting visualization on FlowingData, it
+seems collaborations between the fields are growing more common, but
+more importantly, computational information design edges closer to
+reality. We’re seeing data scientists – people who can do it all –
+emerge from the rest of the pack."
+
+January 2009 Hal Varian, Google’s Chief Economist, tells the McKinsey
+Quarterly: “I keep saying the sexy job in the next ten years will be
+statisticians. People think I’m joking, but who would’ve guessed that
+computer engineers would’ve been the sexy job of the 1990s? The
+ability to take data—to be able to understand it, to process it, to
+extract value from it, to visualize it, to communicate it—that’s going
+to be a hugely important skill in the next decades… Because now we
+really do have essentially free and ubiquitous data. So the
+complimentary scarce factor is the ability to understand that data and
+extract value from it… I do think those skills—of being able to
+access, understand, and communicate the insights you get from data
+analysis—are going to be extremely important. Managers need to be able
+to access and understand the data themselves.”
+
+June 2009 Nathan Yau writes in “Rise of the Data Scientist”: “As we've
+all read by now, Google's chief economist Hal Varian commented in
+January that the next sexy job in the next 10 years would be
+statisticians. Obviously, I whole-heartedly agree. Heck, I'd go a step
+further and say they're sexy now— mentally and physically. However, if
+you went on to read the rest of Varian's interview, you'd know that by
+statisticians, he actually meant it as a general title for someone who
+is able to extract information from large datasets and then present
+something of use to non-data experts… [Ben] Fry… argues for an
+entirely new field that combines the skills and talents from often
+disjoint areas of expertise… [computer science; mathematics,
+statistics, and data mining; graphic design; infovis and
+human-computer interaction]. And after two years of highlighting
+visualization on FlowingData, it seems collaborations between the
+fields are growing more common, but more importantly, computational
+information design edges closer to reality. We're seeing data
+scientists—people who can do it all— emerge from the rest of the
+pack.”
+
+September 2011 Harlan Harris writes in “Data Science, Moore’s Law, and
+Moneyball” : “’Data Science’ is defined as what ‘Data Scientists’ do.
+…  I tend to like the idea that Data Science is defined by its
+practitioners, that it’s a career path rather than a category of
+activities. In my conversations with people, it seems that people who
+consider themselves Data Scientists typically have eclectic career
+paths, that might in some ways seem not to make much sense.”
+
+September 2011 D.J. Patil writes in “Building Data Science Teams”:
+
+"we ... had to figure out what to call the people on our
+teams. ‘Business analyst’ seemed too limiting. ‘Data analyst’ was a
+contender, but we felt that title might limit what people could
+do. After all, many of the people on our teams had deep engineering
+expertise. ‘Research scientist’ was a reasonable job title used by
+companies like Sun, HP, Xerox, Yahoo, and IBM. However, we felt that
+most research scientists worked on projects that were futuristic and
+abstract, and the work was done in labs that were isolated from the
+product development teams. It might take years for lab research to
+affect key products, if it ever did. Instead, the focus of our teams
+was to work on data applications that would have an immediate and
+massive impact on the business. The term that seemed to fit best was
+data scientist: those who use both data and science to create
+something new. “
+
+- Does DS at a university have to look the same as DS in industry?
+
+Introduction to "[[https://www.inferentialthinking.com][Computational and Inferential Thinking]]" (DS8
+textbook) by Ani Adhikari and John DeNero:
+
+  "Data are descriptions of the world around us, collected through
+  observation and stored on computers. Computers enable us to infer
+  properties of the world from these descriptions. Data science is the
+  discipline of drawing conclusions from data using computation. There
+  are three core aspects of effective data analysis: exploration,
+  prediction, and inference."
+
+  "Data science extends the field of statistics by taking full advantage
+  of computing, data visualization, machine learning, optimization, and
+  access to information. The combination of fast computers and the
+  Internet gives anyone the ability to access and analyze vast datasets:
+  millions of news articles, full encyclopedias, databases for any
+  domain, and massive repositories of music, photos, and video."
+
+  "Applications to real data sets motivate the statistical techniques
+  that we describe throughout the text. Real data often do not follow
+  regular patterns or match standard equations. The interesting
+  variation in real data can be lost by focusing too much attention on
+  simplistic summaries such as average values. Computers enable a family
+  of methods based on resampling that apply to a wide range of different
+  inference problems, take into account all available information, and
+  require few assumptions or conditions. Although these techniques have
+  often been reserved for graduate courses in statistics, their
+  flexibility and simplicity are a natural fit for data science
+  applications."
+
+  "Data science provides the means to make precise, reliable, and
+  quantitative arguments about any set of observations. With
+  unprecedented access to information and computing, critical thinking
+  about any aspect of the world that can be measured would be incomplete
+  without effective inferential techniques."
+
+Jones, Lyle V.
+[[https://link.springer.com/content/pdf/10.1007/978-1-4612-4380-9_30.pdf][Introduction to Tukey (1962) The future of data analysis]]
+Breakthroughs in Statistics. Springer New York, 1992. 403-407.
+
+- Tukey's paper is 67 pages, median is 8
+
+ Unlike other articles from the AMS, this paper presents no
+ derivations, proves no theorems, espouses no optimality conditions.
+ Instead, it argues that alternatives to optimal procedures often are
+ required for the statistical anal- ysis of real-world data and that it
+ is the business of statisticians to attend to such alternatives.
+
+ While the development of optimal solutions is judged to be natural and
+ desirable for mathematicians, Tukey deems such developments neither
+ natural nor desirable for statisticians in their contributions to data
+ analysis, because overdependence on optimal properties of procedures
+ is bound to stultify progress, producing "a dried-up, encysted field."
+
+ Tukey argues against viewing statistics "as a monolithic,
+ authoritarian structure designed to produce the 'official' results."
+ He enthusiastically sup- ports a flexible attitude for data analysis
+ and the use of alternative approaches and techniques for attacking a
+ given problem.  The competing techniques then may be compared, not
+ solely with respect to one criterion, but with respect to alternative
+ criteria as well.  We are urged to "face up to the fact that data
+ analysis is intrinsically an empirical science;" therefore, data
+ analysts should adopt the attitudes of experimental science, giving up
+ "the vain hope that data analysis can be founded upon a
+ logico-deductive system."
+
+ In perspective, this paper presented a clear challenge to established
+ standards of academic statistics, and it outlined the framework for
+ the future development of exploratory data analysis.  In earlier
+ papers, Tukey (e.g., 1954, 1960a) had hinted at the need for
+ reformation.  He had argued for statistics as a science rather than a
+ branch of mathematics [Tukey (1953, 1961a)], had urged statisticians
+ to study real-world problems for which normality is a myth [Tukey
+ (1960a, 1960b)], and had emphasized the importance of dis- tinguishing
+ decision problems and decision procedures from conclusion pro- blems
+ and conclusion procedures [Tukey (1960c)].
+
+ Mosteller relates that some of Tukey's exploratory data analysis had
+ appeared as memoranda long before, in the early 1940s, and that "many
+ in the invisible college were aware of that work" [Mosteller (1984)].
+
+ Tukey proposes that work in mathematical statistics should fall in
+ either of two categories: (1) work motivated by a desire to contribute
+ to the practice of data analysis, and (2) work not so motivated, which
+ then should be judged by the standards of pure mathematics.  Work
+ justified by neither data analysis nor pure mathematics is "doomed to
+ sink out of sight."  He pleads for novelty in data analysis, as
+ illustrated by "wholly new questions to be answered," by "more
+ realistic frameworks" for familiar problems, and by developing "unfa-
+ miliar summaries" of data that are likely to be "unexpectedly
+ revealing."
+
+ Over a span of more than 50 years, Tukey is credited with some 800
+ publications.  Also, he has participated in a myriad of national
+ research activities.  He has contributed to methodology in the
+ physical sciences and engineering, environmental sciences, medical
+ sciences, social sciences, and educational research, and he has
+ influenced public policy in many of these areas, as a member of the
+ president's Science Advisory Committee and numerous other policy
+ committees.  Not infrequently, in fulfilling his responsibilities on
+ a committee, Tukey was inspired to invent new procedures that later
+ were found to have wide applicability.
+
+Tukey, John W.
+[[http://www.jstor.org/stable/2237638][The Future of Data Analysis]] 
+The Annals of Mathematical Statistics, vol. 33, no. 1, 1962, pp. 1–67.
+
+ All in all, I have come to feel that my central interest is in data
+ analysis, which I take to include, among other things: procedures for
+ analyzing data, techniques for interpreting the results of such
+ procedures, ways of planning the gathering of data to make its
+ analysis easier, more precise or more accurate, and all the machinery
+ and results of (mathematical) statistics which apply to analyzing
+ data.
+
+ Some parts of data analysis, as the term is here stretched beyond its
+ philology, are allocation, in the sense that they guide us in the
+ distribution of effort and other valuable considerations in
+ observation, experimentation, or analysis. Data analysis is a
+ larger and more varied field than inference, or incisive procedures,
+ or allocation.
+
+Work on new problems, using new frameworks:
+
+ How is novelty most likely to begin and grow? Not through work on
+ familiar problems, in terms of familiar frameworks, and starting with
+ the results of applying familiar processes to the observations. Some
+ or all of these familiar constraints must be given up in each piece
+ of work which may contribute novelty.  We should seek out wholly new
+ questions to be answered. This is likely to require a concern with
+ more complexly organized data, though there will be exceptions, as
+ when we are insightful enough to ask new, useful kinds of questions
+ about familiar sorts of data.
+
+Criticism on the aloofness of statistics:
+
+ I once suggested in discussion at a statistical meeting that it might
+ be well if statisticians looked to see how data was actually analyzed
+ by many sorts of people. A very eminent and senior statistician rose
+ at once to say that this was a novel idea, that it might have merit,
+ but that young statisticians should be careful not to indulge in it
+ too much, since it might distort their ideas.  The ideas of data
+ analysis ought to survive a look at how data is analyzed. Those who
+ try may even find new techniques evolving, as my colleague Martin
+ Wilk suggests, from studies of the nature of "intuitive
+ generalization".
+
+Definition of DS:
+
+ [Data Science is] defined by a ubiquitous problem rather than by a
+ concrete subject
+
+ Data analysis, and the parts of statistics which adhere to it, must
+ then take on the characteristics of a science rather than those of
+ mathematics, specifically:
+
+ (bl) Data analysis must seek for scope and usefulness rather than security.
+ (b2) Data analysis must be willing to err moderately often in order
+ that inadequate evidence shall more often suggest the right answer.
+ (b3) Data analysis must use mathematical argument and mathematical
+ results as bases for judgment rather than as bases for proof or
+ stamps of validity.
+
+ As Martin Wilk has put it, "The hallmark of good science is that it
+ uses models and 'theory' but never believes them."
+
+On efforts like the Machine Shop, or the new scientific model:
+
+ Thus data analysis, and adhering statistics, faces an unusually
+ difficult problem of communicating certain of its essentials, one
+ which cannot presumably be met as well as in most fields by indirect
+ discourse and working side-by-side.
+
+Breiman, Leo.
+[[https://projecteuclid.org/euclid.ss/1009213726][Statistical modeling: The two cultures]]
+Statistical science 16.3 (2001): 199-231.
+
+Prediction vs inference:
+
+ Prediction.  To be able to predict what the responses are going to be to future input
+ variables;
+
+ [Inference].  To [infer] how nature is associating the response variables to the input
+ variables.
+
+* COMMENT Summaries
+
+ We discuss the arrival of Data Science: how it came to be, its scope,
+ and how that affects the modern practitioner.  From there, we'll browse
+ Elegant SciPy (the book), and explore a showcase of several
+ data-intensive scientific projects currently underway at BIDS and
+ Berkeley, including Cesium-ML (time series analysis platform), Genesis
+ (space mission), and SkyPortal (telescope survey frontend).  Finally, we
+ propose a new, team-based approach to science, modeled in the spirit of
+ Agile software development.
+
+ Part I: Some History
+
+ In the 60s, John Tukey predicted the friction that would eventually
+ lead to the phenomenon of Data Science.  Standing at the intersection
+ of many fields, Data Science seems to be greater than the sum of its
+ parts.  Donoho, Breiman, and others have asked: what do we include,
+ what do we leave out, and what does that choice imply?  For those of
+ us already involved in activities that may or may not be called Data
+ Science, that question seems existential, yet oddly irrelevant.
+
+ Part II: A highly selective showcase of Berkeley science problems
+
+ Once we've established a high degree of uncertainty around whether we
+ are doing data science, we proceed to showcase several data-rich
+ scientific problems currently being addressed at BIDS.  Specifically,
+ I'll mention Cesium-ML (time series analysis platform), Genesis (space
+ mission), material science, and SkyPortal.
+
+ Part III: Elegant Data Science
+
+ Recently, we published "Elegant SciPy".  I'll give you a brief tour
+ through the book, and end with some ideas on how to extend elegance to
+ Data Science and beyond.
+
+ elegance -- tied to good mathematical underpinning?
+
+

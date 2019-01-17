@@ -1,0 +1,110 @@
+.reveal {
+    font-size: 250%;
+}
+
+.reveal * {
+    text-align: left;
+}
+
+.reveal h2 {
+    font-size: 220%;
+    margin-top: -0.25em;
+    padding-bottom: 0.25em;
+}
+
+.reveal h3 {
+    font-size: 190%;
+    margin-top: -0.25em;
+    padding-bottom: 0.25em;
+}
+
+.reveal h4 {
+    font-size: 160%;
+    margin-top: -0.25em;
+    padding-bottom: 0.25em;
+}
+
+.reveal section img {
+    border: none;
+    /*box-shadow: none;*/
+}
+
+#sec-title-slide {
+    font-size: 45%;
+}
+
+#sec-title-slide p.date {
+    display: none;
+}
+
+.reveal table {
+    display: inline-block;
+    font-size: 50%;
+}
+
+.reveal ul {
+    display: inline-block;
+}
+
+
+#end_slide {
+    display: none;
+}
+
+.centerBox {
+    text-align: center;
+}
+
+.centerBox p {
+    display: inline-block;
+    text-align: left;
+}
+
+.figure {
+    display: inline;
+}
+
+.leftColumn {
+    float: left;
+    width: 50%;
+    vertical-align: middle;
+}
+
+.leftColumnNarrow {
+    float: left;
+    width: 40%;
+    vertical-align: middle;
+}
+
+
+.reveal blockquote {
+    border: none;
+    box-shadow: none;
+    font-size: 80%;
+}
+
+section[data-state~="smaller"] {
+    font-size: 90%;
+}
+
+section[data-state~="no-header"] h1 {
+    display: none;
+}
+
+section[data-state~="no-header"] h2 {
+    display: none;
+}
+
+section[data-state~="no-header"] h3 {
+    display: none;
+}
+
+section[data-state~="no-header"] h4 {
+    display: none;
+}
+
+section[data-state~="end-slide"] img {
+    box-shadow: none !important;
+    vertical-align: middle;
+}
+
