@@ -1,5 +1,11 @@
-# How to Write Good Scientific Software
+---
+title: How to Write Good Scientific Software
+author: Stéfan van der Walt
+date: 16 January 2019, MLSS
+colorlinks: true
+---
 
+<!--
 ## About me
 
 Hi, everyone.  My name is Stéfan van der Walt, and I am a researcher
@@ -12,8 +18,7 @@ Foundation, the other from the Alfred P. Sloan Foundation, to
 modernize NumPy for the next decade of data science.  Otherwise, I do
 research at the intersection of computation and various domains, such
 as astronomy, ecology, and material science.
-
-## Overview
+-->
 
 What I'd like to do today is to define scientific software, describe
 how it is different from other types of software, and discuss the
@@ -46,11 +51,10 @@ scientific codes become associated with research outputs, such as
 published papers.  At this point, ideally, the software should be open
 for inspection, so that the science can be verified.  The vast
 majority of research code has *not* historically fallen into this
-category, but I would argue that there are systematic changes underway
+category[^research-false], but I would argue that there are systematic changes underway
 that will place more and more emphasis on openness.
 
-.. Why Most Published Research Findings Are False
-.. https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124
+[^research-false]: [Why Most Published Research Findings Are False, https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124)
 
 ## Purpose
 
@@ -85,19 +89,19 @@ to more specific technical mechanisms.
 > Neuroscience Institute, I walked into my office to find the
 > DiPy---that is, Diffusion Imaging in Python---team, busy finalizing
 > their new API design after an entire day's work.
-
+>
 > I happened to be working on almost identical software, not realizing
 > that theirs covered similar ground.  So, curious---and excited about the
 > prospect of being able to collaborate and leverage their
 > work---I started asking them about their new design, with my own use
 > case in mind.
-
+>
 > It soon became clear that the software would not be able to do what
 > I needed.  But, to the team's credit, despite some tired and
 > exasperated looks, they worked with me for the rest of the weekend
 > to refine their design until we had a general enough
 > interface that addressed all of our needs.
-
+>
 > For the next two years, I worked very closely with this team,
 > helping them build out the package.  That software---which serves a
 > niche purpose in MRI---now has more than 250 citations.
@@ -108,16 +112,14 @@ newly discovered synergy the development team grew, which in turn led
 to many further hours of productive collaboration.
 
 There is a large and ever-growing volume of research that shows the
-advantages of group work.  For example, about an April 2006 article in
-the Journal of Personality and Social Psychology, author Patrick
+advantages of group work.  For example, about an April 2006 [article in
+the Journal of Personality and Social Psychology](https://www.apa.org/news/press/releases/2006/04/group.aspx), author Patrick
 Laughlin from the University of Illinois says:
 
 > "We found that groups of size three, four, and five outperformed the
 > best individuals and attribute this performance to the ability of
 > people to work together to generate and adopt correct responses,
 > reject erroneous responses, and effectively process information."
-
-.. https://www.apa.org/news/press/releases/2006/04/group.aspx
 
 This emphasizes the quality of work a team can do.  Other similar
 experiments compare, e.g., teams of students against their professors.
@@ -129,20 +131,18 @@ Jeff Sutherland, the co-inventor of SCRUM and co-author of the Agile
 Manifesto, said at the Global Scrum Gathering 2017 that he believed
 the optimal team size is 5.
 
-But he continues to observe something remarkable: that while
+But he also observe something remarkable[^sutherland-book]: that while
 individual developers different in productivity with a ratio of as
 much as 1:10, the difference can be orders of magnitude larger when it
 comes to teams.
 
-.. Jeff Sutherland, Doing Twice the Work in Half the Time, Chapter 3
+[^sutherland-book]: Jeff Sutherland, Doing Twice the Work in Half the Time, Chapter 3
 
 In 2012, Google launched Project Aristotle to determine what makes a
-good team successful.  One of their key findings was that group norms
+good team successful.  [One of their key findings](https://www.nytimes.com/2016/02/28/magazine/what-google-learned-from-its-quest-to-build-the-perfect-team.html?smid=pl-share) was that group norms
 are a key to success.  In other words, it makes a difference when team
 members feel comfortable enough to take risks, make mistakes, and
 voice their opinions.
-
-.. https://www.nytimes.com/2016/02/28/magazine/what-google-learned-from-its-quest-to-build-the-perfect-team.html?smid=pl-share
 
 There are also some further straightforward connections with teams and
 better work:
@@ -177,19 +177,19 @@ and disciplines for improving the quality of your software.
 > each piece of functionality they included.  Invariably, almost every
 > single contribution performed incorrectly on some corner case of the
 > data.
-
+>
 > I knew at this point already that almost all the code I wrote was
 > flawed in some way, and that it only improved through iterative
 > refinement.  But it was an eye-opener to see that the best
 > programmers still made mistakes---and frequently.
-
+>
 > Just like when you drive a car, you have certain blind spots while
 > programming.  And just like you check that blind spot on the road,
 > there are techniques we can use to make software development safer.
 
 Let me highlight a few of those mechanisms:
 
-1. Test your software.
+### Test your software
 
 At a very minimum, your software has to be run, frequently.  This does
 not guarantee correct results, but at least allows you to go back and
@@ -214,11 +214,11 @@ research to allow others to explore data and results.
 
 To automate your tests, you may make use of continuous integration
 systems such as Travis-CI, Azure Pipelines, et cetera.
+(See, e.g.,
+[PR #3584 from NumPy](https://github.com/scikit-image/scikit-image/pull/3584),
+and its [test results on Travis-CI](https://travis-ci.org/scikit-image/scikit-image/builds/465090731).)
 
-.. [PR](https://github.com/scikit-image/scikit-image/pull/3584)
-.. [test results](https://travis-ci.org/scikit-image/scikit-image/builds/465090731)
-
-2. Track your progress.
+### Track your progress
 
 Using a revision control system is a must, and I recommend Git.  This
 lets you track the history of your software as it evolves, reduces the
@@ -235,34 +235,30 @@ Shine.  That is, sort out unneeded items, have a place for everything,
 and keep your workspace clean.  Git provides the software tools to do
 this.
 
-3. Document your code.
+### Document your code
 
 Your code may never see another pair of eyes, but even for your own
 benefit: document your code.  I suggest identifying a documentation
-template, such as the one we use for the NumPy project.  Here, we
+template, such as [the one we use for the NumPy project](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard).  Here, we
 decide beforehand the types of things that should be documented, so
-that each function has the same information.  For example, you can
+that each function has the same information.  [For example](https://github.com/numpy/numpy/blob/master/numpy/linalg/linalg.py#L328), you can
 describe: the intent of the function, input parameters, return values,
 usage examples, and notes and references.
 
-.. https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard
-.. [example docstring](https://github.com/numpy/numpy/blob/master/numpy/linalg/linalg.py#L328)
-
-
-4. Keep it simple.
+### Keep it simple
 
 > We all know that moment.  Huzzah!  Ten lines of code condensed
 > into a one-liner.  It's a divine piece of art, beautifully compact.
-
+>
 > And, yet, so utterly incomprehensible to future you.
-
+>
 > I don't know where the following idea originated, but Robert Martin
 > states it well in "Clean Code".  He writes: “Indeed, the ratio of
 > time spent reading versus writing is well over 10 to 1. We are
 > constantly reading old code as part of the effort to write new
 > code. ...[Therefore,] making it easy to read makes it easier to
 > write.”
-
+>
 > In addition, Martin Fowler wrote: "Any fool can write code that a
 > computer can understand. Good programmers write code that humans can
 > understand."
@@ -270,18 +266,18 @@ usage examples, and notes and references.
 Making code *shorter* does not necessarily mean making it *simpler* to
 understand.  Strive for clarity of expression, instead.
 
-5. Algorithm over optimization.
+### Algorithm over optimization
 
 > We all know the Donald Knuth quote: "Premature optimization is the
 > root of all evil".
-
+>
 > I experienced this first-hand while writing a library to calculate
 > discrete pulse transforms of images.  I spent weeks on this project,
 > utilizing every trick in the book: I wrote a library in C, cached
 > every intermediate calculation I could think of, invented a brand
 > new data-structure that was sparse and yet allowed querying and
 > calculation.  I felt *good* about this code; it was clever and fast.
-
+>
 > One day, an old professor walked into my office. Oh, by the way, he
 > said, I wrote an implementation of the discrete pulse transform this
 > weekend.  I ran the code: it executed correctly, and was at least as
@@ -289,15 +285,16 @@ understand.  Strive for clarity of expression, instead.
 > of pure Python.  No particular optimizations.  Just: the right idea,
 > aided by the appropriate built-in data structures (priority queues,
 > in this case).
-
+>
 > It turns out the professor was the one who invented the algorithm,
 > so I guess he knew something about it.  But it did teach me a
 > valuable lesson: get the *execution order* right.  You can write
-> your code in assembler, and your O(N^2) algorithm still won't beat
-> O(N) runtime on a large enough dataset.  Worry about implementing
-> *the correct algorithm*, instead of optimizing the wrong one.
+> your code in assembler, and your $\mathcal{O}(N^2)$ algorithm still
+> won't beat $\mathcal{O}(N)$ runtime on a large enough dataset.
+> Worry about implementing *the correct algorithm*, instead of
+> optimizing the wrong one.
 
-6. Automate everything.
+### Automate everything
 
 As far as possible, automate all processes: building of your software,
 testing, producing figures for papers, the works.  When you automate a
@@ -305,13 +302,13 @@ process, you have one place to go to make a fix that affects all of
 your work.  Otherwise, you will be very tempted to only fix the
 outputs that urgently require attention.
 
-The Japanese has the practice of Kaizen (改善), or "continual
+The Japanese has the practice of Kaizen (\jpfont 改善\defaultfont), or "continual
 improvement".  Small changes, applied many times over, can result in
 great progress.
 
-.. [Elegant SciPy](https://github.com/elegant-scipy/elegant-scipy)
+As an example of a fully automated publication, see [Elegant SciPy](https://github.com/elegant-scipy/elegant-scipy).
 
-7. Be consistent.
+### Be consistent
 
 There is no single best way to structure and format code.  Pick a
 style you like, and stick to it.  Structure your entire code base the
@@ -336,8 +333,6 @@ public repository, where it will receive a Digital Object Identifier,
 or DOI---essentially a snapshot, that shows the state of the software
 at a specific point in time.
 
-.. [Brett's paper](https://github.com/bnaul/IrregularTimeSeriesAutoencoderPaper)
-
 A third option is to simply upload the software to your website.  It's
 the way we used to do it, but we now have better mechanisms.
 
@@ -355,4 +350,11 @@ widely usable.  At a minimum, ensure that your code is *tested* and
 *documented*.  Aim for *reusability*.  Then, *publish* your work: it will
 make science more transparent, and it will make your code better.
 
-.. Article that covers some similar ground, sent by JB: https://towardsdatascience.com/modernizing-academic-data-science-4213794a278e by https://pbeukema.github.io/
+## Notes
+
+A friend reviewing my talk pointed me
+to
+[this article](https://towardsdatascience.com/modernizing-academic-data-science-4213794a278e)
+by
+[Patrick Beukema](https://pbeukema.github.io/) that covers similar
+ground.  Looks like we're in agreement!

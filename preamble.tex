@@ -1,0 +1,10 @@
+\setmainfont{Noto Serif}
+\newfontfamily{\defaultfont}{Noto Serif}
+\newfontfamily{\jpfont}{Noto Serif CJK JP}
+
+\usepackage{framed}
+\usepackage{xcolor}
+\let\oldquote=\quote
+\let\endoldquote=\endquote
+\colorlet{shadecolor}{gray!10}
+\renewenvironment{quote}{\begin{shaded*}\begin{oldquote}}{\end{oldquote}\end{shaded*}}
