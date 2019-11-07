@@ -1,0 +1,50 @@
+# -*- restclient -*-
+
+:token = 401e960d-4aa2-4f6f-aa7d-c68f06251e13
+
+# Request system information
+
+GET http://localhost:5000/api/sysinfo
+Authorization: token :token
+
+# Download a single source
+
+GET http://localhost:5000/api/sources/14gqr
+Authorization: token :token
+
+# Get groups
+GET http://localhost:5000/api/groups
+Authorization: token :token
+
+# Add a new source
+
+POST http://localhost:5000/api/sources
+Authorization: token :token
+Content-Type: application/json
+
+{
+        "id": "m87",
+        "ra": 187.705,
+        "dec": 12.39619,
+        "ra_dis": 0,
+        "dec_dis": 0,
+        "redshift": 0.00428
+}
+
+# Add photometry; these can also be bundled
+
+POST http://localhost:5000/api/photometry
+Authorization: token :token
+Content-Type: application/json
+
+{
+        "sourceID": "m87",
+        "obsTime": "2019-06-20 00:10:19.359870",
+        "timeFormat": "iso",
+        "timeScale": "utc",
+        "instrumentID": 1,
+        "mag": 9.59,
+        "e_mag": 0,
+        "lim_mag": 12,
+        "filter": "V"
+}
